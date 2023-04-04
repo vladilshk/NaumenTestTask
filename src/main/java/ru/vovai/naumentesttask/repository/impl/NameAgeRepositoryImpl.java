@@ -69,7 +69,6 @@ public class NameAgeRepositoryImpl implements NameAgeRepository {
     }
 
     public Name convertStringToName(String nameData){
-        System.out.println(nameData);
         //TODO: add exception
         String[] nameAndAge = nameData.split("_");
         return new Name(nameAndAge[0], Integer.parseInt(nameAndAge[1]));

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.vovai.naumentesttask.dto.NameDTO;
+import ru.vovai.naumentesttask.dto.StatisticDTO;
 import ru.vovai.naumentesttask.service.NameAgeService;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class NameAgeController {
 
     @GetMapping("/statistics")
     @ResponseStatus(HttpStatus.OK)
-    public List<NameDTO> getStatistics() throws IOException {
+    public List<StatisticDTO> getStatistics() throws IOException {
         return nameAgeService.getAllNames();
     }
 

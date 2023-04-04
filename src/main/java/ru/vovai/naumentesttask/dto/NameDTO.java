@@ -10,5 +10,4 @@ import lombok.Setter;
 public class NameDTO {
     private String name;
     private int age;
-    private int views;
 }

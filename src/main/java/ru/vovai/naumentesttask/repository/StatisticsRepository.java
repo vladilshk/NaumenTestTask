@@ -11,4 +11,6 @@ public interface StatisticsRepository {
     Optional<Statistic> findByName(String name);
 
     Optional<Statistic> findById(Long id);
+
+    Optional<Statistic> update(String name);
 }

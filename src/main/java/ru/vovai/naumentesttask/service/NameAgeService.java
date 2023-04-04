@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.vovai.naumentesttask.dto.NameDTO;
 import ru.vovai.naumentesttask.dto.NameRequest;
+import ru.vovai.naumentesttask.dto.StatisticDTO;
 import ru.vovai.naumentesttask.model.Name;
 import ru.vovai.naumentesttask.model.Statistic;
 import ru.vovai.naumentesttask.repository.NameAgeRepository;
@@ -24,42 +25,38 @@ public class NameAgeService {
     private final StatisticsRepository statisticsRepository;
     private final RestTemplate restTemplate;
     //Name - id
+    //TODO: add cache , maybe replace hashMap with radis
     private final HashMap<String , Integer> namesCache;
 
     public NameDTO getAge(String name) throws IOException {
         Optional<Name> answerName = nameAgeRepository.findByName(name);
-        //if db contains this name, we return age, else we add this name to db with random age
-        /*if (answerName.isPresent()){
-            return convertNameToDTO(answerName.get());
-        }
-        else
-            return null;*/
 
-       /* statisticsRepository.save(*//*(statisticsRepository.findByName(name).orElse(*//*
-                    Statistic.builder()
-                        .name(name)
-                        .count(1)
-                        .build()
-        *//*)*//*);*/
-        return convertNameToDTO(answerName.orElseGet(() -> {
+        if (answerName.isPresent()){
+            if (statisticsRepository.findByName(name).isPresent()) {
+                statisticsRepository.update(name);
+            } else{
+                statisticsRepository.save(Statistic.builder()
+                                .name(name)
+                                .count(1)
+                        .build());
+            }
+            return convertNameToDTO(answerName.get());
+        } else {
+            System.out.println("blia");
+            return convertNameToDTO(addName(name));
+        }
+    }
+
+    public List<StatisticDTO> getAllNames() throws IOException {
+        List<Name> nameList = nameAgeRepository.findAll();
+        return nameList.stream().map(name -> {
+            Statistic statistic = statisticsRepository.findByName(name.getName()).orElse(null);
             try {
-                return addName(name);
+                return createStatisticDTO(name, statistic);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }));
-    }
-
-    public List<NameDTO> getAllNames() throws IOException {
-        List<Name> nameList = nameAgeRepository.findAll();
-        return nameList.stream().map(this::convertNameToDTO).toList();
-    }
-
-    private NameDTO convertNameToDTO(Name name){
-        return NameDTO.builder()
-                .name(name.getName())
-                .age(name.getAge())
-                .build();
+        }).toList();
     }
 
     public NameDTO getMaxAge() throws IOException {
@@ -94,6 +91,29 @@ public class NameAgeService {
         return Name.builder()
                 .name(nameRequest.getName())
                 .age(nameRequest.getAge())
+                .build();
+    }
+
+    private NameDTO convertNameToDTO(Name name){
+        return NameDTO.builder()
+                .name(name.getName())
+                .age(name.getAge())
+                .build();
+    }
+
+    public StatisticDTO createStatisticDTO(Name name, Statistic statistic) throws IOException {
+        if (statistic == null){
+            statistic = statisticsRepository.save(
+                    Statistic.builder()
+                            .name(name.getName())
+                            .count(0)
+                            .build()
+            );
+        }
+        return StatisticDTO.builder()
+                .name(name.getName())
+                .age(name.getAge())
+                .count(statistic.getCount())
                 .build();
     }
 }
