@@ -1,0 +1,10 @@
+
+<div class="container">
+  <h1>Введите имя чтобы узнать его возраст</h1>
+  <input [(ngModel)]="name" type="text" placeholder="Введите имя" id="nameInput">
+  <button (click)="changeName()" id="ageButton">Узнать возраст</button>
+  <p *ngIf="isChosen">Возраст имени {{chosenName}} - {{age}}</p>
+
+  <button (click)="openStatisticsPage()" сlass="linkButton">Посмотреть статистику</button>
+</div>
+

@@ -1,0 +1,46 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+html, body{
+  height: 100%;
+  font-family: 'Roboto Thin', serif;
+  background-color: antiquewhite;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+input {
+  padding: 8px;
+  margin-bottom: 16px;
+}
+
+button {
+  padding: 8px 16px;
+  margin-bottom: 16px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.linkButton {
+  padding: 8px 16px;
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

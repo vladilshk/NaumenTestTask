@@ -1,0 +1,26 @@
+
+<div class="container">
+
+
+  <button (click)="getMaxAge()" id="ageButton">{{maxAgeText}}</button>
+  <div *ngIf="maxAgeIsChosen">
+    <h2>Самый большой возраст {{maxAgeName}} - {{maxAge}}</h2>
+  </div>
+
+
+  <button (click)="getStatistics()" id="ageButton">{{statisticsText}}</button>
+  <div *ngIf="statisticIsChosen">
+    <h2>Статистика запросов</h2>
+    <ul>
+      <li *ngFor="let pair of statisticsPairs">
+        {{pair.name}} - {{pair.count}}
+      </li>
+    </ul>
+  </div>
+
+  <button сlass="linkButton" (click)="openDataPage()" >Вернуться на главную страницу</button>
+
+</div>
+
+
+
