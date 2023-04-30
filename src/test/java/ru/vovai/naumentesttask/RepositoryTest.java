@@ -14,7 +14,7 @@ import java.io.IOException;
 })
 public class RepositoryTest {
 
-    private final NameAgeRepository nameAgeRepository = new NameAgeRepositoryImpl();
+    private final NameAgeRepository nameAgeRepository = new NameAgeRepositoryImpl(fileCommunicator);
 
     @Test
     public void getName() {

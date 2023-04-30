@@ -10,6 +10,5 @@ import lombok.*;
 @Builder
 public class StatisticDTO {
     private String name;
-    private int age;
     private long count;
 }

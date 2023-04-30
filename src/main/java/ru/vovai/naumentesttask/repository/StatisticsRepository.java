@@ -3,6 +3,7 @@ package ru.vovai.naumentesttask.repository;
 import ru.vovai.naumentesttask.model.Statistic;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 public interface StatisticsRepository {
@@ -10,7 +11,7 @@ public interface StatisticsRepository {
 
     Optional<Statistic> findByName(String name);
 
-    Optional<Statistic> findById(Long id);
-
     Optional<Statistic> update(String name);
+
+    List<Statistic> findAll() throws IOException;
 }
